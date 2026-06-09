@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>🐉 Wumpus World - Complete</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px;
+        }
+
+        /* Particles animation - FEATURE KEPT */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 215, 0, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .game-container {
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .game-subtitle {
+            color: #aaa;
+            font-size: 8px;
+        }
+
+        .stats-panel {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 5px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .stat-label {
+            font-size: 8px;
+            color: #aaa;
+        }
+
+        .stat-value {
+            font-size: 14px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .canvas-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        canvas {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 12px;
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+        }
+
+        canvas:active {
+            transform: scale(0.98);
+        }
+
+        .touch-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 6px;
+            max-width: 180px;
+            margin: 8px auto;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 12px;
+            padding: 8px;
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            color: #ffd700;
+        }
+
+        .control-btn:active {
+            transform: scale(0.92);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 6px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 140, 0, 0.1));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 5px 14px;
+            color: #ffd700;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .message-area {
+            margin-top: 8px;
+            padding: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+            min-height: 42px;
+        }
+
+        .game-message {
+            font-size: 9px;
+            color: #ffd700;
+            animation: pulse 1s ease;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .percepts {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+            margin: 6px 0;
+            flex-wrap: wrap;
+        }
+
+        .percept-badge {
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 8px;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 8px;
+            padding-top: 6px;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            font-size: 8px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: #aaa;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.3); }
+            100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        }
+
+        .win-effect {
+            animation: glow 0.5s ease infinite alternate;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            border-radius: 20px;
+            padding: 15px;
+            max-width: 280px;
+            text-align: center;
+            border: 2px solid #ffd700;
+        }
+
+        .modal-content h2 {
+            color: #ffd700;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .modal-content p {
+            font-size: 9px;
+            margin: 6px 0;
+            color: white;
+        }
+
+        .close-modal {
+            background: #ffd700;
+            color: #1a1a2e;
+            border: none;
+            padding: 6px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="game-container">
+        <div class="game-header">
+            <div class="game-title">🐉 WUMPUS WORLD</div>
+            <div class="game-subtitle">The Classic Cave Adventure</div>
+        </div>
+
+        <div class="stats-panel">
+            <div class="stat-card"><div class="stat-label">SCORE</div><div class="stat-value" id="score">0</div></div>
+            <div class="stat-card"><div class="stat-label">MOVES</div><div class="stat-value" id="moves">0</div></div>
+            <div class="stat-card"><div class="stat-label">GOLD</div><div class="stat-value" id="goldStatus">❌</div></div>
+            <div class="stat-card"><div class="stat-label">BEST</div><div class="stat-value" id="bestScore">0</div></div>
+        </div>
+
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="300" height="300"></canvas>
+        </div>
+
+        <div class="percepts" id="percepts"></div>
+
+        <div class="touch-controls">
+            <div></div>
+            <div class="control-btn" id="btnUp">⬆️</div>
+            <div></div>
+            <div class="control-btn" id="btnLeft">⬅️</div>
+            <div class="control-btn" id="btnDown">⬇️</div>
+            <div class="control-btn" id="btnRight">➡️</div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn" id="resetBtn">🔄 NEW GAME</button>
+            <button class="action-btn" id="helpBtn">📖 HOW TO PLAY</button>
+        </div>
+
+        <div class="message-area">
+            <div class="game-message" id="gameMessage">✨ Find the gold and escape! ✨</div>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">🤖 You</div>
+            <div class="legend-item">👹 Wumpus</div>
+            <div class="legend-item">💰 Gold</div>
+            <div class="legend-item">💀 Pit</div>
+            <div class="legend-item">💨 Stench</div>
+            <div class="legend-item">🌊 Breeze</div>
+            <div class="legend-item">✨ Glitter</div>
+        </div>
+    </div>
+
+    <div class="modal" id="helpModal">
+        <div class="modal-content">
+            <h2>📖 How to Play</h2>
+            <p>🎯 Find <span style="color:#ffd700">💰 GOLD</span> and return to <span style="color:#00ff88">START</span></p>
+            <p>💀 Avoid <span style="color:#ff6600">👹 WUMPUS</span> and <span style="color:#666">💀 PITS</span></p>
+            <p>💨 Stench = Wumpus nearby<br>🌊 Breeze = Pit nearby<br>✨ Glitter = Gold here!</p>
+            <p>🎮 Arrow keys or tap buttons | R to restart</p>
+            <button class="close-modal" onclick="closeModal()">GOT IT!</button>
+        </div>
+    </div>
+
+    <script>
+        const SIZE = 5;
+        let canvas = document.getElementById('gameCanvas');
+        let ctx = canvas.getContext('2d');
+        
+        let agent = [0, 0];
+        let wumpus = [2, 3];
+        let gold = [4, 2];
+        let pits = [];
+        let hasGold = false;
+        let score = 0;
+        let moves = 0;
+        let gameOver = false;
+        let win = false;
+        let bestScore = localStorage.getItem('wumpusBestScore') || 0;
+        
+        let scoreEl = document.getElementById('score');
+        let movesEl = document.getElementById('moves');
+        let goldStatusEl = document.getElementById('goldStatus');
+        let bestScoreEl = document.getElementById('bestScore');
+        let gameMessageEl = document.getElementById('gameMessage');
+        let perceptsEl = document.getElementById('percepts');
+        
+        bestScoreEl.textContent = bestScore;
+        
+        function generateRandomPositions() {
+            do { wumpus = [Math.floor(Math.random() * SIZE), Math.floor(Math.random() * SIZE)]; } 
+            while (wumpus[0] === agent[0] && wumpus[1] === agent[1]);
+            
+            do { gold = [Math.floor(Math.random() * SIZE), Math.floor(Math.random() * SIZE)]; } 
+            while ((gold[0] === agent[0] && gold[1] === agent[1]) || (gold[0] === wumpus[0] && gold[1] === wumpus[1]));
+            
+            pits = [];
+            while (pits.length < 3) {
+                let pit = [Math.floor(Math.random() * SIZE), Math.floor(Math.random() * SIZE)];
+                let isOccupied = (pit[0] === agent[0] && pit[1] === agent[1]) ||
+                                (pit[0] === wumpus[0] && pit[1] === wumpus[1]) ||
+                                (pit[0] === gold[0] && pit[1] === gold[1]);
+                let isDuplicate = pits.some(p => p[0] === pit[0] && p[1] === pit[1]);
+                if (!isOccupied && !isDuplicate) pits.push(pit);
+            }
+        }
+        
+        function initGame() {
+            agent = [0, 0];
+            hasGold = false;
+            score = 0;
+            moves = 0;
+            gameOver = false;
+            win = false;
+            generateRandomPositions();
+            updateUI();
+            gameMessageEl.textContent = "✨ Find the gold and escape! ✨";
+            gameMessageEl.style.color = "#ffd700";
+            draw();
+            document.querySelector('.canvas-wrapper').classList.remove('win-effect');
+        }
+        
+        function getPercepts() {
+            let stench = Math.abs(agent[0] - wumpus[0]) + Math.abs(agent[1] - wumpus[1]) === 1;
+            let breeze = pits.some(p => Math.abs(agent[0] - p[0]) + Math.abs(agent[1] - p[1]) === 1);
+            let glitter = (agent[0] === gold[0] && agent[1] === gold[1] && !hasGold);
+            return { stench, breeze, glitter };
+        }
+        
+        function updatePerceptsDisplay() {
+            let p = getPercepts();
+            let html = '';
+            if (p.stench) html += '<span class="percept-badge">💨 STENCH (Wumpus nearby!)</span>';
+            if (p.breeze) html += '<span class="percept-badge">🌊 BREEZE (Pit nearby!)</span>';
+            if (p.glitter) html += '<span class="percept-badge">✨ GLITTER (Gold here!)</span>';
+            if (!html) html = '<span class="percept-badge">🔍 Nothing unusual...</span>';
+            perceptsEl.innerHTML = html;
+        }
+        
+        function updateUI() {
+            scoreEl.textContent = score;
+            movesEl.textContent = moves;
+            goldStatusEl.textContent = hasGold ? '✅' : '❌';
+            if (score > bestScore && !gameOver) {
+                bestScore = score;
+                bestScoreEl.textContent = bestScore;
+                localStorage.setItem('wumpusBestScore', bestScore);
+            }
+            updatePerceptsDisplay();
+        }
+        
+        function createMoveParticle() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    let particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.width = particle.style.height = Math.random() * 5 + 2 + 'px';
+                    particle.style.animationDuration = Math.random() * 2 + 1 + 's';
+                    particle.style.background = `rgba(255, 215, 0, ${Math.random() * 0.5})`;
+                    document.querySelector('.particles').appendChild(particle);
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 50);
+            }
+        }
+        
+        function createGoldEffect() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    let particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.width = particle.style.height = Math.random() * 8 + 3 + 'px';
+                    particle.style.animationDuration = Math.random() * 1 + 0.5 + 's';
+                    particle.style.background = `rgba(255, 215, 0, ${Math.random() * 0.8})`;
+                    document.querySelector('.particles').appendChild(particle);
+                    setTimeout(() => particle.remove(), 1000);
+                }, i * 50);
+            }
+        }
+        
+        function createVictoryEffect() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    let particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.width = particle.style.height = Math.random() * 10 + 3 + 'px';
+                    particle.style.animationDuration = Math.random() * 2 + 0.5 + 's';
+                    particle.style.background = `rgba(255, 215, 0, ${Math.random() * 1})`;
+                    document.querySelector('.particles').appendChild(particle);
+                    setTimeout(() => particle.remove(), 1500);
+                }, i * 30);
+            }
+        }
+        
+        function move(dx, dy) {
+            if (gameOver) return;
+            
+            let newRow = agent[0] + dy;
+            let newCol = agent[1] + dx;
+            
+            if (newRow < 0 || newRow >= SIZE || newCol < 0 || newCol >= SIZE) {
+                gameMessageEl.textContent = "❌ You hit a wall! Can't go that way!";
+                gameMessageEl.style.color = "#ff6666";
+                setTimeout(() => {
+                    if (!gameOver) {
+                        gameMessageEl.textContent = "✨ Keep exploring! ✨";
+                        gameMessageEl.style.color = "#ffd700";
+                    }
+                }, 1000);
+                return;
+            }
+            
+            agent = [newRow, newCol];
+            moves++;
+            score--;
+            updateUI();
+            createMoveParticle();
+            
+            if (agent[0] === wumpus[0] && agent[1] === wumpus[1]) {
+                gameOver = true;
+                gameMessageEl.textContent = "💀 THE WUMPUS ATE YOU! GAME OVER! 💀";
+                gameMessageEl.style.color = "#ff4444";
+                draw();
+                return;
+            }
+            
+            if (pits.some(p => p[0] === agent[0] && p[1] === agent[1])) {
+                gameOver = true;
+                gameMessageEl.textContent = "💀 YOU FELL INTO A PIT! GAME OVER! 💀";
+                gameMessageEl.style.color = "#ff4444";
+                draw();
+                return;
+            }
+            
+            if (agent[0] === gold[0] && agent[1] === gold[1] && !hasGold) {
+                hasGold = true;
+                score += 1000;
+                updateUI();
+                gameMessageEl.textContent = "🎉 AMAZING! You found the GOLD! +1000 points! Now RETURN TO START! 🎉";
+                gameMessageEl.style.color = "#ffd700";
+                createGoldEffect();
+            }
+            
+            if (hasGold && agent[0] === 0 && agent[1] === 0) {
+                gameOver = true;
+                win = true;
+                gameMessageEl.textContent = `🏆 VICTORY! You escaped with the gold! FINAL SCORE: ${score} 🏆`;
+                gameMessageEl.style.color = "#ffd700";
+                document.querySelector('.canvas-wrapper').classList.add('win-effect');
+                createVictoryEffect();
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestScoreEl.textContent = bestScore;
+                    localStorage.setItem('wumpusBestScore', bestScore);
+                }
+            }
+            draw();
+        }
+        
+        function draw() {
+            canvas.width = 300;
+            canvas.height = 300;
+            let cellSize = canvas.width / SIZE;
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < SIZE; i++) {
+                for (let j = 0; j < SIZE; j++) {
+                    let gradient = ctx.createLinearGradient(j*cellSize, i*cellSize, (j+1)*cellSize, (i+1)*cellSize);
+                    gradient.addColorStop(0, '#1a1a2e');
+                    gradient.addColorStop(1, '#16213e');
+                    ctx.fillStyle = gradient;
+                    ctx.fillRect(j*cellSize, i*cellSize, cellSize, cellSize);
+                    ctx.strokeStyle = 'rgba(255, 215, 0, 0.2)';
+                    ctx.strokeRect(j*cellSize, i*cellSize, cellSize, cellSize);
+                }
+            }
+            
+            pits.forEach(pit => {
+                ctx.fillStyle = '#2d2d3a';
+                ctx.fillRect(pit[1]*cellSize, pit[0]*cellSize, cellSize, cellSize);
+                ctx.font = `${cellSize * 0.4}px Arial`;
+                ctx.fillStyle = '#666';
+                ctx.fillText("💀", pit[1]*cellSize + cellSize*0.3, pit[0]*cellSize + cellSize*0.7);
+            });
+            
+            ctx.fillStyle = '#5d3a1a';
+            ctx.fillRect(wumpus[1]*cellSize, wumpus[0]*cellSize, cellSize, cellSize);
+            ctx.font = `${cellSize * 0.5}px Arial`;
+            ctx.fillStyle = '#ff6600';
+            ctx.fillText("👹", wumpus[1]*cellSize + cellSize*0.25, wumpus[0]*cellSize + cellSize*0.75);
+            
+            if (!hasGold && !(agent[0] === gold[0] && agent[1] === gold[1])) {
+                ctx.font = `${cellSize * 0.5}px Arial`;
+                ctx.fillStyle = '#ffd700';
+                ctx.fillText("💰", gold[1]*cellSize + cellSize*0.25, gold[0]*cellSize + cellSize*0.75);
+            }
+            
+            let p = getPercepts();
+            if (p.stench) {
+                ctx.font = `${cellSize * 0.25}px Arial`;
+                ctx.fillStyle = '#888';
+                ctx.fillText("💨", agent[1]*cellSize + 5, agent[0]*cellSize + cellSize*0.3);
+            }
+            if (p.breeze) {
+                ctx.font = `${cellSize * 0.25}px Arial`;
+                ctx.fillStyle = '#4488ff';
+                ctx.fillText("🌊", agent[1]*cellSize + cellSize*0.65, agent[0]*cellSize + cellSize*0.3);
+            }
+            if (p.glitter) {
+                ctx.font = `${cellSize * 0.25}px Arial`;
+                ctx.fillStyle = '#ffd700';
+                ctx.fillText("✨", agent[1]*cellSize + cellSize*0.4, agent[0]*cellSize + cellSize*0.3);
+            }
+            
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = '#00ff88';
+            ctx.fillStyle = '#00ff88';
+            ctx.beginPath();
+            ctx.arc(agent[1]*cellSize + cellSize/2, agent[0]*cellSize + cellSize/2, cellSize/3, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.font = `${cellSize * 0.4}px Arial`;
+            ctx.fillStyle = '#000';
+            ctx.fillText("🤖", agent[1]*cellSize + cellSize*0.3, agent[0]*cellSize + cellSize*0.7);
+            
+            if (gameOver) {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = `${cellSize * 0.45}px Arial`;
+                ctx.fillStyle = win ? '#ffd700' : '#ff4444';
+                ctx.textAlign = 'center';
+                ctx.fillText(win ? '🏆 VICTORY! 🏆' : '💀 GAME OVER 💀', canvas.width/2, canvas.height/2);
+                ctx.textAlign = 'left';
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('helpModal').style.display = 'none';
+        }
+        
+        document.getElementById('btnUp').addEventListener('click', () => move(0, -1));
+        document.getElementById('btnDown').addEventListener('click', () => move(0, 1));
+        document.getElementById('btnLeft').addEventListener('click', () => move(-1, 0));
+        document.getElementById('btnRight').addEventListener('click', () => move(1, 0));
+        document.getElementById('resetBtn').addEventListener('click', () => initGame());
+        document.getElementById('helpBtn').addEventListener('click', () => {
+            document.getElementById('helpModal').style.display = 'flex';
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowUp') move(0, -1);
+            if (e.key === 'ArrowDown') move(0, 1);
+            if (e.key === 'ArrowLeft') move(-1, 0);
+            if (e.key === 'ArrowRight') move(1, 0);
+            if (e.key === 'r' || e.key === 'R') initGame();
+            if (e.key === 'Escape') closeModal();
+        });
+        
+        for (let i = 0; i < 30; i++) {
+            let particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.width = particle.style.height = Math.random() * 4 + 1 + 'px';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.animationDuration = Math.random() * 10 + 5 + 's';
+            particle.style.background = `rgba(255, 215, 0, ${Math.random() * 0.3})`;
+            document.querySelector('.particles').appendChild(particle);
+        }
+        
+        initGame();
+    </script>
+</body>
+</html>

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Sana Shahzad Coffee | Premium Artisan Coffee - 3D Custom Cup Studio</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Three.js -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js"
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0D2B1F;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            color: #E8E0D5;
+        }
+
+        /* Responsive Meta */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1A3A2A; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+
+        /* Glassmorphism - Emerald Theme */
+        .glass-nav, .glass-card, .customizer-panel, .menu-card {
+            background: rgba(13, 43, 31, 0.95);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37, #B8960F);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #0D2B1F;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #D4AF37;
+            color: #D4AF37;
+        }
+        .btn-outline:hover {
+            background: rgba(212, 175, 55, 0.15);
+        }
+
+        /* Cup Control Buttons */
+        .cup-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .ctrl-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #D4AF37;
+            padding: 8px 16px;
+            border-radius: 30px;
+            color: #D4AF37;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .ctrl-btn:hover {
+            background: #D4AF37;
+            color: #0D2B1F;
+        }
+
+        /* Typography */
+        h1, h2, h3, .serif {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .gold-text {
+            color: #D4AF37;
+        }
+
+        /* Navigation - Responsive */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: #E8E0D5;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 0.9rem;
+        }
+        .nav-links a:hover { color: #D4AF37; }
+
+        /* Hero Section - Responsive */
+        .hero-section {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #0D2B1F, #1A3A2A);
+            padding: 5rem 5% 3rem;
+        }
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #D4AF37;
+            font-family: 'Playfair Display', serif;
+        }
+        .real-coffee-img {
+            width: 100%;
+            max-width: 450px;
+            border-radius: 30px;
+            box-shadow: 0 25px 40px rgba(0,0,0,0.3);
+        }
+
+        /* Menu Section - Responsive Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .menu-card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: #D4AF37;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        .menu-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .price-tag {
+            color: #D4AF37;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        /* Color Swatches */
+        .color-swatch {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        .color-swatch:hover { transform: scale(1.1); }
+        .color-swatch.active {
+            border-color: #D4AF37;
+            transform: scale(1.12);
+            box-shadow: 0 0 25px rgba(212, 175, 55, 0.8);
+        }
+
+        /* Form Elements */
+        input, select, textarea {
+            background: #1A3A2A;
+            border: 1px solid #D4AF37;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #E8E0D5;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        /* Cart */
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #D4AF37;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #0D2B1F;
+        }
+
+        .sweetness-slider {
+            width: 100%;
+            height: 6px;
+            background: #2A4A3A;
+            border-radius: 5px;
+            -webkit-appearance: none;
+        }
+        .sweetness-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+        }
+
+        /* Loader */
+        .loader-bean {
+            width: 80px;
+            height: 110px;
+            background: radial-gradient(ellipse at 35% 40%, #D4AF37, #8B7300);
+            border-radius: 50% 50% 45% 45%;
+            margin: 0 auto;
+            animation: beanPulse 1.2s ease-in-out infinite;
+        }
+        @keyframes beanPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; box-shadow: 0 0 30px rgba(212,175,55,0.6); }
+        }
+
+        /* 3D Container Responsive */
+        .three-container {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-section { flex-direction: column; text-align: center; }
+            .hero-stats { justify-content: center; }
+            .customizer-panel { padding: 1.2rem; }
+        }
+
+        @media (max-width: 768px) {
+            .glass-nav { padding: 0.8rem 1.5rem; }
+            .nav-links { display: none; }
+            .hero-title { font-size: 2rem !important; }
+            .menu-grid { grid-template-columns: 1fr; }
+            .customization-wrapper { flex-direction: column; }
+            .three-container { height: 400px; }
+            .color-swatch { width: 45px; height: 45px; }
+            .cup-controls { justify-content: center; }
+            .cart-sidebar { width: 100%; right: -100%; }
+        }
+
+        @media (max-width: 480px) {
+            .btn-primary { padding: 10px 20px; font-size: 0.8rem; }
+            .section-title { font-size: 1.8rem; }
+            .hero-stats { gap: 1rem; }
+            .stat-number { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader" style="position:fixed; top:0; left:0; width:100%; height:100%; background:#0D2B1F; z-index:9999; display:flex; justify-content:center; align-items:center; flex-direction:column; transition:opacity 0.8s;">
+    <div class="loader-bean"></div>
+    <div class="serif" style="margin-top:25px; font-size:28px; letter-spacing:4px; color:#D4AF37;">SANA SHAHZAD</div>
+    <div style="margin-top:10px; color:#A8B5B0;">crafting your golden hour...</div>
+    <div style="margin-top:15px; width:200px; height:2px; background:#1A3A2A; border-radius:2px; overflow:hidden;">
+        <div id="loaderProgress" style="width:0%; height:100%; background:#D4AF37; transition:width 0.1s;"></div>
+    </div>
+</div>
+
+<main>
+    <!-- Navigation -->
+    <nav class="glass-nav" style="position:sticky; top:20px; margin:0 5%; width:90%; z-index:1000; border-radius:60px; padding:0.8rem 2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap;">
+        <div class="serif" style="font-size:1.5rem; font-weight:700; color:#D4AF37;">Sana Shahzad ☕</div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#menu">Menu</a>
+            <a href="#customizer">3D Cup Studio</a>
+            <a href="#about">About</a>
+        </div>
+        <div class="cart-icon" style="position:relative; cursor:pointer;" onclick="openCart()">
+            <i class="fas fa-shopping-bag" style="font-size:1.2rem; color:#D4AF37;"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div style="max-width:1400px; margin:0 auto; display:flex; flex-wrap:wrap; align-items:center; gap:3rem;">
+            <div style="flex:1.2;">
+                <div style="margin-bottom:1rem;">
+                    <span style="background:#D4AF3715; padding:8px 20px; border-radius:30px; font-size:0.8rem; color:#D4AF37;">EST. 2014</span>
+                </div>
+                <h1 class="serif" style="font-size:clamp(2rem,5vw,4rem); line-height:1.2;">Artisanal Coffee<br>Crafted for Connoisseurs</h1>
+                <p style="font-size:1rem; margin:1.5rem 0; color:#A8B5B0; max-width:500px;">Experience the finest single-origin beans from Ethiopia, Colombia, and beyond. Customize your 3D cup with your personal touch.</p>
+                <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                    <button class="btn-primary" onclick="document.getElementById('customizer').scrollIntoView({behavior:'smooth'})"><i class="fas fa-palette"></i> Design Your Cup</button>
+                    <button class="btn-primary btn-outline" onclick="document.getElementById('menu').scrollIntoView({behavior:'smooth'})">Explore Menu →</button>
+                </div>
+                <div class="hero-stats">
+                    <div><div class="stat-number">15+</div><div>Years</div></div>
+                    <div><div class="stat-number">60+</div><div>Varieties</div></div>
+                    <div><div class="stat-number">15k+</div><div>Customers</div></div>
+                </div>
+            </div>
+            <div style="flex:1; text-align:center;">
+                <img src="https://i.pinimg.com/736x/5f/87/d2/5f87d28c8d853f43b8b4569f517d2010.jpg" alt="Premium Coffee" class="real-coffee-img">
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION - 6 VARIETIES -->
+    <section id="menu" style="padding:4rem 5%; background:#0A1F15;">
+        <div style="max-width:1400px; margin:0 auto;">
+            <div style="text-align:center; margin-bottom:2.5rem;">
+                <h2 class="serif" style="font-size:2.2rem; color:#D4AF37;">Signature Collection</h2>
+                <p style="color:#A8B5B0;">Freshly roasted • ethically sourced • prices in PKR</p>
+            </div>
+            
+            <!-- Menu Sections -->
+            <div style="margin-bottom:2.5rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1rem; color:#D4AF37;"><i class="fas fa-mug-hot"></i> Espresso</h3>
+                <div class="menu-grid">
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/7c/ff/92/7cff9259605cabc4cc2a9e9ee37018ea.jpg"><div style="padding:1.2rem;"><h4>Single Espresso</h4><p style="color:#A8B5B0;">Pure, intense, rich crema</p><span class="price-tag">₨ 590</span><button class="add-to-cart" data-name="Single Espresso" data-price="590" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/5e/aa/e4/5eaae40689d2efe69e62c5b47d25b4b2.jpg"><div style="padding:1.2rem;"><h4>Double Espresso</h4><p style="color:#A8B5B0;">Double shot, extra strong</p><span class="price-tag">₨ 890</span><button class="add-to-cart" data-name="Double Espresso" data-price="890" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/1200x/45/a8/f1/45a8f1ef20c0516c2712a154912e3ff3.jpg"><div style="padding:1.2rem;"><h4>Ristretto</h4><p style="color:#A8B5B0;">Shorter, sweeter, intense</p><span class="price-tag">₨ 690</span><button class="add-to-cart" data-name="Ristretto" data-price="690" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:2.5rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1rem; color:#D4AF37;"><i class="fas fa-coffee"></i> Latte</h3>
+                <div class="menu-grid">
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/f6/59/e9/f659e9e7ddb7986877cdd9f052a3114a.jpg"><div style="padding:1.2rem;"><h4>Vanilla Latte</h4><p style="color:#A8B5B0;">Smooth vanilla, creamy</p><span class="price-tag">₨ 1,590</span><button class="add-to-cart" data-name="Vanilla Latte" data-price="1590" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/97/6f/e7/976fe7d600238d377e398a77cd45bd51.jpg"><div style="padding:1.2rem;"><h4>Caramel Latte</h4><p style="color:#A8B5B0;">Rich caramel, buttery</p><span class="price-tag">₨ 1,690</span><button class="add-to-cart" data-name="Caramel Latte" data-price="1690" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/8f/91/2e/8f912ef8955685e120d0e56cd681435c.jpg"><div style="padding:1.2rem;"><h4>Hazelnut Latte</h4><p style="color:#A8B5B0;">Nutty, aromatic, smooth</p><span class="price-tag">₨ 1,690</span><button class="add-to-cart" data-name="Hazelnut Latte" data-price="1690" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:2.5rem;">
+                <h3 style="font-size:1.3rem; margin-bottom:1rem; color:#D4AF37;"><i class="fas fa-snowflake"></i> Iced Coffee</h3>
+                <div class="menu-grid">
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/1200x/1b/40/a7/1b40a72f135a79d3ad73fbb5a1fdfd3f.jpg"><div style="padding:1.2rem;"><h4>Iced Americano</h4><p style="color:#A8B5B0;">Espresso, water, ice</p><span class="price-tag">₨ 1,290</span><button class="add-to-cart" data-name="Iced Americano" data-price="1290" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/a4/a1/7b/a4a17bf478e22fb93a138e3c87c62f8b.jpg"><div style="padding:1.2rem;"><h4>Iced Caramel Macchiato</h4><p style="color:#A8B5B0;">Layered vanilla, caramel</p><span class="price-tag">₨ 1,890</span><button class="add-to-cart" data-name="Iced Caramel Macchiato" data-price="1890" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/1200x/18/da/2f/18da2fad7461d22ec47f3a8d7da6e7b3.jpg"><div style="padding:1.2rem;"><h4>Cold Brew</h4><p style="color:#A8B5B0;">12hr steep, honey notes</p><span class="price-tag">₨ 1,790</span><button class="add-to-cart" data-name="Cold Brew" data-price="1790" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                </div>
+            </div>
+
+            <div>
+                <h3 style="font-size:1.3rem; margin-bottom:1rem; color:#D4AF37;"><i class="fas fa-crown"></i> Signature & Specialty</h3>
+                <div class="menu-grid">
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/1e/1c/6f/1e1c6f8e24e3331c71d2df5dc6a83814.jpg"><div style="padding:1.2rem;"><h4>Ethiopian Yirgacheffe</h4><p style="color:#A8B5B0;">Floral, jasmine, citrus</p><span class="price-tag">₨ 2,490</span><button class="add-to-cart" data-name="Ethiopian Yirgacheffe" data-price="2490" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/3e/ab/4f/3eab4f668f4d7870016f898e85d41367.jpg"><div style="padding:1.2rem;"><h4>Matcha Latte</h4><p style="color:#A8B5B0;">Ceremonial matcha</p><span class="price-tag">₨ 1,850</span><button class="add-to-cart" data-name="Matcha Latte" data-price="1850" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                    <div class="menu-card"><img class="menu-img" src="https://i.pinimg.com/736x/71/9d/12/719d12f4ec895d07cacb17a3fac597b6.jpg"><div style="padding:1.2rem;"><h4>Golden Turmeric Latte</h4><p style="color:#A8B5B0;">Turmeric, ginger, honey</p><span class="price-tag">₨ 1,750</span><button class="add-to-cart" data-name="Golden Turmeric Latte" data-price="1750" style="margin-top:10px; width:100%; background:#D4AF37; border:none; padding:10px; border-radius:30px; color:#0D2B1F; font-weight:600; cursor:pointer;">Add to Cart</button></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3D Cup Customizer -->
+    <section id="customizer" style="padding:4rem 5%; background:#0D2B1F;">
+        <div style="max-width:1400px; margin:0 auto;">
+            <div style="text-align:center; margin-bottom:2rem;">
+                <h2 class="serif" style="font-size:2.2rem; color:#D4AF37;">3D Cup Studio</h2>
+                <p style="color:#A8B5B0;">Design your perfect cup — customize color, drink, sweetness & size</p>
+            </div>
+            <div style="display:flex; flex-wrap:wrap; gap:2rem;">
+                <div style="flex:1.5; min-width:300px; height:550px; background:#1A3A2A; border-radius:30px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.4);" id="threeCanvasContainer"></div>
+                <div class="customizer-panel" style="flex:1; padding:1.5rem; border-radius:30px;">
+                    <h3 style="margin-bottom:1.2rem; color:#D4AF37;">Customize Your Cup</h3>
+                    
+                    <div style="margin-bottom:1rem;">
+                        <label style="color:#D4AF37;">🎨 Cup Color:</label>
+                        <div id="colorPalette" style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+                            <div class="color-swatch" style="background:#D4AF37;" data-color="#D4AF37" title="Gold"></div>
+                            <div class="color-swatch" style="background:#1A4A35;" data-color="#1A4A35" title="Emerald"></div>
+                            <div class="color-swatch" style="background:#2C5A4D;" data-color="#2C5A4D" title="Forest"></div>
+                            <div class="color-swatch" style="background:#F5E6D0;" data-color="#F5E6D0" title="Cream"></div>
+                            <div class="color-swatch" style="background:#8B5A2B;" data-color="#8B5A2B" title="Bronze"></div>
+                            <div class="color-swatch" style="background:#C6713E;" data-color="#C6713E" title="Terracotta"></div>
+                        </div>
+                    </div>
+
+                    <label style="color:#D4AF37;">☕ Select Drink:</label>
+                    <select id="drinkSelect" style="margin-bottom:12px;">
+                        <option>Espresso</option>
+                        <option selected>Latte</option>
+                        <option>Cappuccino</option>
+                        <option>Americano</option>
+                        <option>Mocha</option>
+                    </select>
+
+                    <label style="color:#D4AF37;">📏 Cup Size:</label>
+                    <select id="cupSizeSelect" style="margin-bottom:12px;">
+                        <option value="0.85">Small (8oz)</option>
+                        <option value="1.0" selected>Medium (12oz) +₨200</option>
+                        <option value="1.15">Large (16oz) +₨400</option>
+                    </select>
+
+                    <label style="color:#D4AF37;">🌡️ Temperature:</label>
+                    <select id="tempSelect" style="margin-bottom:12px;">
+                        <option>Hot</option>
+                        <option>Iced +₨100</option>
+                    </select>
+
+                    <label style="color:#D4AF37;">🍬 Sweetness:</label>
+                    <input type="range" id="sweetnessSlider" class="sweetness-slider" min="0" max="100" value="50" style="margin:10px 0;">
+                    <div style="display:flex; justify-content:space-between; margin-bottom:12px; color:#A8B5B0; font-size:0.7rem;">
+                        <span>No Sugar</span><span>Medium</span><span>Very Sweet</span>
+                    </div>
+
+                    <label style="color:#D4AF37;">✍️ Your Name:</label>
+                    <input type="text" id="customerNameInput" placeholder="Enter your name" maxlength="25" style="margin-bottom:12px;">
+
+                    <!-- Cup Controls - Rotate, Zoom, Stop -->
+                    <div class="cup-controls">
+                        <button id="rotateLeftBtn" class="ctrl-btn"><i class="fas fa-undo-alt"></i> Rotate Left</button>
+                        <button id="stopRotateBtn" class="ctrl-btn"><i class="fas fa-stop"></i> Stop</button>
+                        <button id="startRotateBtn" class="ctrl-btn"><i class="fas fa-play"></i> Auto Rotate</button>
+                        <button id="rotateRightBtn" class="ctrl-btn"><i class="fas fa-redo-alt"></i> Rotate Right</button>
+                        <button id="zoomInBtn" class="ctrl-btn"><i class="fas fa-search-plus"></i> Zoom In</button>
+                        <button id="zoomOutBtn" class="ctrl-btn"><i class="fas fa-search-minus"></i> Zoom Out</button>
+                    </div>
+
+                    <div style="background:#1A3A2A; border-radius:20px; padding:10px; text-align:center; margin:15px 0; border:1px solid #D4AF37;">
+                        <span id="dynamicCupPrice" style="color:#D4AF37; font-weight:bold; font-size:1.2rem;">₨ 1,790</span>
+                    </div>
+                    <button id="addCustomCupBtn" class="btn-primary" style="width:100%; padding:12px;"><i class="fas fa-plus-circle"></i> Add Custom Cup to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" style="padding:4rem 5%; background:#0A1F15; text-align:center;">
+        <div style="max-width:800px; margin:0 auto;">
+            <h2 class="serif" style="font-size:2rem; color:#D4AF37;">Our Philosophy</h2>
+            <p style="margin:1rem 0; line-height:1.7; color:#A8B5B0;">Since 2014, Sana Shahzad Coffee has been dedicated to sourcing the finest beans from Ethiopia, Colombia, and beyond. Each cup is roasted to perfection and served with love.</p>
+            <div style="display:flex; justify-content:center; gap:1.5rem; margin-top:2rem; flex-wrap:wrap;">
+                <div><i class="fas fa-truck" style="color:#D4AF37;"></i> Free Delivery</div>
+                <div><i class="fas fa-award" style="color:#D4AF37;"></i> Award Winning</div>
+                <div><i class="fas fa-leaf" style="color:#D4AF37;"></i> Sustainable Beans</div>
+                <div><i class="fas fa-clock" style="color:#D4AF37;"></i> Fresh Daily</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div id="cartOverlay" style="position:fixed; top:0; right:-100%; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:2000; transition:0.3s;"></div>
+    <div id="cartSidebar" style="position:fixed; top:0; right:-450px; width:450px; max-width:90%; height:100vh; background:#0D2B1F; z-index:2001; padding:1.5rem; transition:0.3s; overflow-y:auto; border-left:2px solid #D4AF37;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem;">
+            <h3 style="color:#D4AF37;">Your Cart</h3>
+            <button onclick="closeCart()" style="background:none; border:none; font-size:1.5rem; color:#D4AF37; cursor:pointer;">✕</button>
+        </div>
+        <div id="cartItemsList"></div>
+        <div style="margin-top:1.5rem; padding-top:1rem; border-top:2px solid #D4AF37;">
+            <strong style="color:#D4AF37;">Total: ₨ <span id="cartTotalAmount">0</span></strong>
+        </div>
+        <button class="btn-primary" style="width:100%; margin-top:1rem;" onclick="showCheckout()">Proceed to Checkout</button>
+        
+        <div id="checkoutForm" style="display:none; margin-top:1.5rem;">
+            <h4 style="margin-bottom:1rem; color:#D4AF37;">Delivery Details</h4>
+            <input type="text" id="fullName" placeholder="Full Name" style="margin-bottom:10px;">
+            <input type="text" id="city" placeholder="City" style="margin-bottom:10px;">
+            <input type="text" id="address" placeholder="Delivery Address" style="margin-bottom:10px;">
+            <input type="tel" id="phone" placeholder="Phone Number" style="margin-bottom:10px;">
+            <textarea id="instructions" rows="2" placeholder="Special Instructions" style="margin-bottom:10px;"></textarea>
+            <div style="display:flex; gap:1rem; margin-bottom:1rem; flex-wrap:wrap;">
+                <label><input type="radio" name="payment" value="COD" checked> Cash on Delivery</label>
+                <label><input type="radio" name="payment" value="Card"> Card Payment</label>
+            </div>
+            <button onclick="placeOrder()" class="btn-primary" style="width:100%;">Confirm Order</button>
+        </div>
+    </div>
+
+    <footer style="text-align:center; padding:2rem; background:#0A1F15; border-top:1px solid rgba(212,175,55,0.2);">
+        <div style="display:flex; justify-content:center; gap:1.5rem; margin-bottom:1rem; flex-wrap:wrap;">
+            <i class="fab fa-instagram" style="color:#D4AF37; font-size:1.2rem; cursor:pointer;"></i>
+            <i class="fab fa-facebook-f" style="color:#D4AF37; font-size:1.2rem; cursor:pointer;"></i>
+            <i class="fab fa-twitter" style="color:#D4AF37; font-size:1.2rem; cursor:pointer;"></i>
+        </div>
+        <p style="font-size:0.8rem;">© 2025 Sana Shahzad Coffee — Artisan Coffee. All prices in PKR.</p>
+        <p style="font-size:0.7rem; margin-top:0.5rem; color:#D4AF37;">"When life gives you beans, make extraordinary coffee."</p>
+    </footer>
+</main>
+
+<script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js';
+
+    // Loader Progress
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.random() * 15;
+        if(progress >= 100) {
+            progress = 100;
+            clearInterval(interval);
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                if(loader) { loader.style.opacity = '0'; setTimeout(() => loader.style.display = 'none', 500); }
+            }, 500);
+        }
+        document.getElementById('loaderProgress').style.width = progress + '%';
+    }, 150);
+
+    // 3D Cup Setup
+    const container = document.getElementById('threeCanvasContainer');
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x1A3A2A);
+    
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.set(0, 1.2, 4.8);
+    camera.lookAt(0, 0.85, 0);
+    
+    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setClearColor(0x1A3A2A);
+    renderer.shadowMap.enabled = true;
+    container.innerHTML = '';
+    container.appendChild(renderer.domElement);
+    
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.autoRotate = true;
+    controls.autoRotateSpeed = 1.5;
+    controls.enableZoom = true;
+    controls.zoomSpeed = 1.2;
+    controls.enablePan = false;
+    controls.target.set(0, 0.85, 0);
+    
+    const cupGroup = new THREE.Group();
+    
+    // Cup Body - Emerald base with gold
+    const bodyGeo = new THREE.CylinderGeometry(0.88, 0.65, 1.55, 128);
+    const bodyMat = new THREE.MeshStandardMaterial({ color: '#D4AF37', roughness: 0.15, metalness: 0.5, emissive: 0x442200, emissiveIntensity: 0.1 });
+    const cupBody = new THREE.Mesh(bodyGeo, bodyMat);
+    cupBody.castShadow = true;
+    cupBody.position.y = 0.78;
+    cupGroup.add(cupBody);
+    
+    // Rim
+    const rimGeo = new THREE.TorusGeometry(0.92, 0.05, 64, 200);
+    const rimMat = new THREE.MeshStandardMaterial({ color: 0xD4AF37, metalness: 0.9, roughness: 0.1, emissive: 0x664400, emissiveIntensity: 0.2 });
+    const rim = new THREE.Mesh(rimGeo, rimMat);
+    rim.position.y = 1.56;
+    rim.rotation.x = Math.PI / 2;
+    cupGroup.add(rim);
+    
+    // Base
+    const baseGeo = new THREE.TorusGeometry(0.72, 0.045, 64, 200);
+    const baseMat = new THREE.MeshStandardMaterial({ color: 0xD4AF37, metalness: 0.8 });
+    const base = new THREE.Mesh(baseGeo, baseMat);
+    base.position.y = 0.1;
+    base.rotation.x = Math.PI / 2;
+    cupGroup.add(base);
+    
+    // Label Texture - Emerald Green Background, Gold Text
+    const canvas = document.createElement('canvas');
+    canvas.width = 2048;
+    canvas.height = 2048;
+    const ctx = canvas.getContext('2d');
+    const labelTexture = new THREE.CanvasTexture(canvas);
+    labelTexture.anisotropy = 16;
+    
+    const labelMat = new THREE.MeshStandardMaterial({ map: labelTexture, side: THREE.DoubleSide, roughness: 0.05, metalness: 0.02 });
+    const label = new THREE.Mesh(new THREE.CylinderGeometry(0.92, 0.92, 1.15, 128), labelMat);
+    label.position.y = 0.78;
+    cupGroup.add(label);
+    
+    // Liquid
+    const liquidGeo = new THREE.CylinderGeometry(0.8, 0.8, 0.18, 64);
+    const liquidMat = new THREE.MeshStandardMaterial({ color: 0x8B5A2B, roughness: 0.05, emissive: 0x4A2A10, emissiveIntensity: 0.1 });
+    const liquid = new THREE.Mesh(liquidGeo, liquidMat);
+    liquid.position.y = 1.54;
+    cupGroup.add(liquid);
+    
+    scene.add(cupGroup);
+    
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0x4A5A48, 0.7);
+    scene.add(ambientLight);
+    const keyLight = new THREE.DirectionalLight(0xFFF8F0, 1.5);
+    keyLight.position.set(3, 5, 4);
+    keyLight.castShadow = true;
+    scene.add(keyLight);
+    const fillLight = new THREE.PointLight(0xD4AF37, 0.8);
+    fillLight.position.set(2, 2.5, 3);
+    scene.add(fillLight);
+    const backLight = new THREE.PointLight(0xFFE0A0, 0.7);
+    backLight.position.set(-2, 2, -3.5);
+    scene.add(backLight);
+    const frontLight = new THREE.PointLight(0xD4AF37, 0.6);
+    frontLight.position.set(1.5, 1.8, 3);
+    scene.add(frontLight);
+    
+    function updateLabel() {
+        const customerName = document.getElementById('customerNameInput').value.trim();
+        const displayName = customerName === "" ? "Your Cup" : customerName;
+        const drink = document.getElementById('drinkSelect').value;
+        const sweetness = document.getElementById('sweetnessSlider').value;
+        let sweetnessText = "Medium Sweet";
+        if(sweetness < 30) sweetnessText = "Low Sugar";
+        if(sweetness > 70) sweetnessText = "Very Sweet";
+        
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Emerald Green Background
+        ctx.fillStyle = "#0D2B1F";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Gold Border
+        ctx.strokeStyle = "#D4AF37";
+        ctx.lineWidth = 18;
+        ctx.strokeRect(35, 35, canvas.width - 70, canvas.height - 70);
+        
+        ctx.strokeStyle = "#F5E6D0";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(60, 60, canvas.width - 120, canvas.height - 120);
+        
+        // Coffee Cup Icons INSIDE the border
+        ctx.fillStyle = "#D4AF37";
+        ctx.font = `${canvas.width * 0.045}px "Inter"`;
+        ctx.fillText("☕", 85, 125);
+        ctx.fillText("☕", canvas.width - 125, 125);
+        ctx.fillText("☕", 85, canvas.height - 105);
+        ctx.fillText("☕", canvas.width - 125, canvas.height - 105);
+        
+        // Brand Name - Gold, High Readability
+        ctx.font = `700 ${canvas.width * 0.06}px "Playfair Display"`;
+        ctx.fillStyle = "#D4AF37";
+        ctx.textAlign = "center";
+        ctx.fillText("SANA", canvas.width / 2, canvas.height * 0.28);
+        
+        ctx.font = `600 ${canvas.width * 0.052}px "Playfair Display"`;
+        ctx.fillText("SHAHZAD", canvas.width / 2, canvas.height * 0.39);
+        
+        // Decorative Line
+        ctx.beginPath();
+        ctx.strokeStyle = "#D4AF37";
+        ctx.lineWidth = 2.5;
+        ctx.moveTo(canvas.width * 0.35, canvas.height * 0.46);
+        ctx.lineTo(canvas.width * 0.65, canvas.height * 0.46);
+        ctx.stroke();
+        
+        // Drink Name
+        ctx.font = `${canvas.width * 0.045}px "Inter"`;
+        ctx.fillStyle = "#D4AF37";
+        ctx.fillText(drink, canvas.width / 2, canvas.height * 0.55);
+        
+        // Sweetness
+        ctx.font = `${canvas.width * 0.035}px "Inter"`;
+        ctx.fillStyle = "#D4AF37";
+        ctx.fillText(sweetnessText, canvas.width / 2, canvas.height * 0.64);
+        
+        // Customer Name - Gold, Large
+        ctx.font = `${canvas.width * 0.058}px "Playfair Display"`;
+        ctx.fillStyle = "#D4AF37";
+        ctx.fillText(`✨ ${displayName} ✨`, canvas.width / 2, canvas.height * 0.76);
+        
+        // Tagline
+        ctx.font = `${canvas.width * 0.03}px "Inter"`;
+        ctx.fillStyle = "#A8B5B0";
+        ctx.fillText("handcrafted just for you", canvas.width / 2, canvas.height * 0.88);
+        
+        labelTexture.needsUpdate = true;
+    }
+    
+    // Event Listeners
+    document.getElementById('customerNameInput').addEventListener('input', updateLabel);
+    document.getElementById('drinkSelect').addEventListener('change', updateLabel);
+    document.getElementById('sweetnessSlider').addEventListener('input', updateLabel);
+    
+    // Color Selection
+    document.querySelectorAll('.color-swatch').forEach(sw => {
+        sw.addEventListener('click', () => {
+            cupBody.material.color.set(sw.dataset.color);
+            document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+            sw.classList.add('active');
+        });
+    });
+    
+    // Cup Controls - Rotate, Zoom, Stop
+    document.getElementById('rotateLeftBtn').addEventListener('click', () => {
+        controls.autoRotate = false;
+        cupGroup.rotation.y -= 0.3;
+    });
+    document.getElementById('rotateRightBtn').addEventListener('click', () => {
+        controls.autoRotate = false;
+        cupGroup.rotation.y += 0.3;
+    });
+    document.getElementById('stopRotateBtn').addEventListener('click', () => {
+        controls.autoRotate = false;
+    });
+    document.getElementById('startRotateBtn').addEventListener('click', () => {
+        controls.autoRotate = true;
+    });
+    document.getElementById('zoomInBtn').addEventListener('click', () => {
+        camera.position.z -= 0.3;
+        if(camera.position.z < 2.5) camera.position.z = 2.5;
+    });
+    document.getElementById('zoomOutBtn').addEventListener('click', () => {
+        camera.position.z += 0.3;
+        if(camera.position.z > 7) camera.position.z = 7;
+    });
+    
+    // Price Update
+    const sizeSelect = document.getElementById('cupSizeSelect');
+    const tempSelect = document.getElementById('tempSelect');
+    function updatePrice() {
+        let price = 1590;
+        if(sizeSelect.value === '1.0') price = 1790;
+        if(sizeSelect.value === '1.15') price = 1990;
+        if(tempSelect.value === 'Iced') price += 100;
+        document.getElementById('dynamicCupPrice').innerHTML = `₨ ${price}`;
+        window.currentPrice = price;
+    }
+    sizeSelect.addEventListener('change', updatePrice);
+    tempSelect.addEventListener('change', updatePrice);
+    
+    // Resize Handler for Responsiveness
+    function handleResize() {
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+        renderer.setSize(width, height);
+    }
+    window.addEventListener('resize', handleResize);
+    
+    // Animation
+    function animate() {
+        if(controls.autoRotate) {
+            controls.update();
+        }
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+    }
+    animate();
+    
+    // Initialize
+    updateLabel();
+    updatePrice();
+    document.querySelector('.color-swatch').classList.add('active');
+    
+    // Cart System
+    let cart = [];
+    function updateCartUI() {
+        const list = document.getElementById('cartItemsList');
+        const totalSpan = document.getElementById('cartTotalAmount');
+        const countSpan = document.getElementById('cartCount');
+        let total = 0;
+        list.innerHTML = '';
+        cart.forEach((item, i) => {
+            total += item.price;
+            list.innerHTML += `<div style="padding:12px; border-bottom:1px solid rgba(212,175,55,0.2); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <div><strong style="color:#D4AF37;">${item.name}</strong><br><span style="color:#A8B5B0; font-size:0.8rem;">₨ ${item.price.toLocaleString()}</span></div>
+                <button onclick="removeFromCart(${i})" style="background:#D4AF37; border:none; padding:5px 12px; border-radius:25px; color:#0D2B1F; cursor:pointer;">Remove</button>
+            </div>`;
+        });
+        totalSpan.innerText = total.toLocaleString();
+        countSpan.innerText = cart.length;
+    }
+    window.removeFromCart = (i) => { cart.splice(i,1); updateCartUI(); };
+    window.openCart = () => { document.getElementById('cartOverlay').style.right='0'; document.getElementById('cartSidebar').style.right='0'; };
+    window.closeCart = () => { document.getElementById('cartOverlay').style.right='-100%'; document.getElementById('cartSidebar').style.right='-450px'; document.getElementById('checkoutForm').style.display='none'; };
+    window.showCheckout = () => { if(cart.length===0){alert("Your cart is empty!");return;} document.getElementById('checkoutForm').style.display='block'; };
+    window.placeOrder = () => {
+        const name=document.getElementById('fullName').value, city=document.getElementById('city').value, addr=document.getElementById('address').value, phone=document.getElementById('phone').value;
+        if(!name||!city||!addr||!phone){alert("Please fill all required fields!");return;}
+        alert(`✅ Order Confirmed, ${name}!\n\nTotal: ₨ ${cart.reduce((s,i)=>s+i.price,0).toLocaleString()}\nDelivery to: ${city}, ${addr}\nPhone: ${phone}\n\nThank you for choosing Sana Shahzad Coffee!`);
+        cart=[]; updateCartUI(); closeCart();
+        ['fullName','city','address','phone','instructions'].forEach(id=>document.getElementById(id).value='');
+    };
+    
+    document.querySelectorAll('.add-to-cart').forEach(btn => {
+        btn.addEventListener('click', () => {
+            cart.push({ name: btn.dataset.name, price: parseInt(btn.dataset.price) });
+            updateCartUI();
+            const toast = document.createElement('div');
+            toast.innerText = `✓ ${btn.dataset.name} added to cart!`;
+            toast.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#D4AF37; padding:10px 20px; border-radius:40px; color:#0D2B1F; font-weight:bold; z-index:2002;';
+            document.body.appendChild(toast);
+            setTimeout(()=>toast.remove(),2000);
+        });
+    });
+    
+    document.getElementById('addCustomCupBtn').addEventListener('click', () => {
+        const name = document.getElementById('customerNameInput').value.trim() || "Valued Customer";
+        const drink = document.getElementById('drinkSelect').value;
+        const size = sizeSelect.options[sizeSelect.selectedIndex]?.text;
+        const temp = tempSelect.value;
+        const sweetness = document.getElementById('sweetnessSlider').value;
+        let sweetLevel = sweetness < 30 ? "Low Sugar" : (sweetness > 70 ? "Sweet" : "Medium");
+        const price = window.currentPrice || 1790;
+        cart.push({ name: `✨ Custom: ${drink} (${size}, ${temp}, ${sweetLevel})`, price });
+        updateCartUI();
+        const toast = document.createElement('div');
+        toast.innerText = `✓ Custom cup for "${name}" added!`;
+        toast.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#D4AF37; padding:10px 20px; border-radius:40px; color:#0D2B1F; font-weight:bold; z-index:2002;';
+        document.body.appendChild(toast);
+        setTimeout(()=>toast.remove(),2000);
+    });
+    
+    updateCartUI();
+</script>
+</body>
+</html>

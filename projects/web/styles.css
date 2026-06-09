@@ -1,0 +1,28 @@
+.card{
+    border:10px;
+    width:90px;
+    padding:20px;
+    font-size:20px;
+    font-family:'Times New Roman';
+}
+#head
+{
+
+    width: 300px;
+  padding: 20px; /* Inner space */
+  border: 2px solid black;
+  margin: 30px; /* Outer space */
+  box-sizing: border-box; /* Includes padding in width */
+  font-family: Arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
+  text-align: center;
+  line-height: 1.5;
+    background-color: #f0f0f0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  position: fixed;
+  }
+ 

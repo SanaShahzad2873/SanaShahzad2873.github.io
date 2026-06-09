@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - Sana Shahzad's Delights</title>
+</head>
+<body bgcolor="#000000" text="white" link="white" vlink="white" alink="yellow"- background="./images/background.jpg">
+
+    <!-- Header Section -->
+    <header align="center">
+
+        <br>
+        <img src="./logo/SANA_SHAHZAD_S_DELIGHT-removebg-preview.png" alt="Restaurant Logo" width="200">
+    </header>
+
+    <!-- Navigation Menu -->
+    <table width="100%" bgcolor="#8b0000" cellpadding="15">
+        <tr align="center">
+            <td><a href="index.html">Home</a></td>
+            <td><a href="AboutUs.html">About Us</a></td>
+            <td><a href="Registration.html">Registration</a></td>
+            <td><a href="ContactUs.html">Contact Us</a></td>
+        </tr>
+    </table>
+
+    <main>
+        <font color="white">
+            <h1>Restaurant Registration</h1>
+            <form action="#" method="post">
+                <!-- Basic Information -->
+                <h3>Personal Information</h3>
+                <label for="name">Full Name:</label><br>
+                <input type="text" id="name" name="name" required><br><br>
+                
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" required><br><br>
+                
+                <label for="password">Password:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                <label for="password">Confirm Password:</label><br>
+                <input type="password" id="password" name="password" required><br><br>
+                
+                <label for="phone">Phone Number:</label><br>
+                <input type="tel" id="phone" name="phone" required><br><br>
+                
+                <label for="gender">Gender:</label><br>
+                <select id="gender" name="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                </select><br><br>
+    
+                
+                
+                <label for="cuisine-type">Cuisine Type:</label><br>
+                <select id="cuisine-type" name="cuisine-type" multiple>
+                    <option value="italian">Italian</option>
+                    <option value="indian">Indian</option>
+                    <option value="chinese">Chinese</option>
+                    <option value="mexican">Mexican</option>
+                    <option value="american">American</option>
+                    <option value="japanese">Japanese</option>
+                    <option value="other">Other</option>
+                </select><br>
+               
+                
+                <label for="dining-options">Dining Options:</label><br>
+                <select id="dining-options" name="dining-options">
+                    <option value="dine-in">Dine-in Only</option>
+                    <option value="takeaway">Takeaway Only</option>
+                    <option value="both">Both Dine-in and Takeaway</option>
+                    <option value="delivery">Delivery Only</option>
+                </select><br><br>
+                
+                <label>Facilities (Check all that apply):</label><br>
+                <input type="checkbox" id="wifi" name="facilities" value="wifi">
+                <label for="wifi">Free WiFi</label><br>
+                
+                <input type="checkbox" id="parking" name="facilities" value="parking">
+                <label for="parking">Parking Available</label><br>
+                
+                <input type="checkbox" id="outdoor" name="facilities" value="outdoor">
+                <label for="outdoor">Outdoor Seating</label><br>
+                
+                <input type="checkbox" id="bar" name="facilities" value="bar">
+                <label for="bar">Bar/Lounge</label><br><br>
+                
+                <label for="opening-hours">Opening Hours:</label><br>
+                <select id="opening-hours" name="opening-hours">
+                    <option value="morning">6AM - 12PM</option>
+                    <option value="afternoon">12PM - 6PM</option>
+                    <option value="evening">6PM - 12AM</option>
+                    <option value="night">12AM - 6AM</option>
+                    <option value="24/7">24/7</option>
+                </select><br><br>
+                
+                <label>Accept Terms and Conditions:</label>
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the terms and conditions</label><br><br>
+                
+                <input type="submit" value="Register for Restaurant">
+                <input type="submit"><br>
+            </form>
+        </font>
+    </main>

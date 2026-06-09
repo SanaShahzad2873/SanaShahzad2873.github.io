@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sana Shahzad — Frontend Dev & AI Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+  <div class="loader-inner">
+    <div class="loader-logo">[SS]</div>
+    <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
+    <div class="loader-text" id="loaderText">Initializing...</div>
+  </div>
+</div>
+
+<!-- ===== NAVIGATION ===== -->
+<nav class="nav" id="nav">
+  <a href="#hero" class="nav-brand">[<span>SS</span>]</a>
+  <ul class="nav-menu" id="navMenu">
+    <li><a href="#about" class="nav-link" data-text="About">About</a></li>
+    <li><a href="#skills" class="nav-link" data-text="Skills">Skills</a></li>
+    <li><a href="#projects" class="nav-link" data-text="Projects">Projects</a></li>
+    <li><a href="#certifications" class="nav-link" data-text="Certs">Certs</a></li>
+    <li><a href="#contact" class="nav-link" data-text="Contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="eyebrow-dot"></span>
+      <span class="eyebrow-text">Open to Work</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span class="ht-line" id="htLine1">Sana</span>
+      <span class="ht-line accent" id="htLine2">Shahzad</span>
+    </h1>
+
+    <div class="hero-roles-wrap">
+      <span class="role-label">I build</span>
+      <div class="roles-ticker" id="rolesTicker">
+        <span class="tick-item active">AI-Powered Interfaces</span>
+        <span class="tick-item">RAG Pipelines</span>
+        <span class="tick-item">3D Web Experiences</span>
+        <span class="tick-item">Frontend Products</span>
+      </div>
+    </div>
+
+    <p class="hero-bio">
+      CS student at <strong>University of Central Punjab</strong> (7th Semester),
+      specializing in LLMs, RAG and frontend engineering. I turn complex AI ideas
+      into interfaces people actually love to use.
+    </p>
+
+    <div class="hero-actions">
+      <a href="#projects" class="btn-fill">See My Work</a>
+      <a href="#contact" class="btn-line">Get In Touch →</a>
+    </div>
+
+    <div class="hero-socials">
+      <a href="https://github.com/SanaShahzad2873" target="_blank" class="social-link" title="GitHub">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="https://www.linkedin.com/in/sana-shahzad-3ab543154/" target="_blank" class="social-link" title="LinkedIn">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="mailto:sanashahzad2873@gmail.com" class="social-link" title="Email">
+        <i class="fas fa-envelope"></i>
+      </a>
+      <a href="tel:+923123207029" class="social-link" title="Phone">
+        <i class="fas fa-phone"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <div class="photo-ring r1"></div>
+      <div class="photo-ring r2"></div>
+      <div class="photo-ring r3"></div>
+      <img src="assets/sana_photo.png" alt="Sana Shahzad" class="hero-photo" id="heroPhoto"/>
+      <div class="photo-badge badge-1">
+        <i class="fab fa-aws"></i>
+        <span>AWS Certified</span>
+      </div>
+      <div class="photo-badge badge-2">
+        <span>7th Sem CS</span>
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-indicator">
+    <div class="scroll-track"><div class="scroll-thumb"></div></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about section" id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">About Me</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p class="about-lead">I'm a CS student obsessed with the intersection of <em>beautiful UI</em> and <em>intelligent systems</em>.</p>
+        <p>My journey started with pixel-perfect HTML pages and has evolved into building AI-powered applications with LLM backends and RAG pipelines. I believe the best AI is the one wrapped in a UI so smooth, users forget they're talking to a machine.</p>
+        <p>Currently in my 7th semester at <strong>University of Central Punjab</strong>, I'm actively working on projects that combine frontend craftsmanship with machine learning depth.</p>
+
+        <div class="about-tags">
+          <span>🎓 UCP — CS Student</span>
+          <span>🤖 LLMs & RAG</span>
+          <span>⚡ Frontend Dev</span>
+          <span>☁️ AWS Certified</span>
+          <span>📐 Agile / Scrum</span>
+          <span>🏎️ 3D Modeling</span>
+        </div>
+      </div>
+
+      <div class="terminal reveal" style="transition-delay:.15s">
+        <div class="term-bar">
+          <span class="tb red"></span><span class="tb yellow"></span><span class="tb green"></span>
+          <span class="term-title">sana@portfolio:~</span>
+        </div>
+        <div class="term-body" id="termBody">
+          <div class="term-line"><span class="tp">❯</span> <span class="tc">whoami</span></div>
+          <div class="term-out">Sana Shahzad</div>
+          <div class="term-line"><span class="tp">❯</span> <span class="tc">cat passion.txt</span></div>
+          <div class="term-out">→ Frontend Engineering</div>
+          <div class="term-out">→ AI / Machine Learning</div>
+          <div class="term-out">→ LLMs &amp; RAG Pipelines</div>
+          <div class="term-out">→ 3D Design &amp; Blender</div>
+          <div class="term-line"><span class="tp">❯</span> <span class="tc">ls achievements/</span></div>
+          <div class="term-out txt-green">AWS_Academy_Graduate ✓</div>
+          <div class="term-out txt-green">CSAF_Certificate ✓</div>
+          <div class="term-line"><span class="tp">❯</span> <span class="tc blink">_</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section class="skills section" id="skills">
+  <div class="container">
+    <div class="section-header">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Tech Stack</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <div class="sc-icon">⚡</div>
+        <h3>Frontend</h3>
+        <div class="skill-pills">
+          <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+          <span>React</span><span>Responsive Design</span><span>Animations</span>
+        </div>
+        <div class="skill-meter"><div class="sm-fill" data-w="88"></div></div>
+        <span class="sm-label">88%</span>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:.1s">
+        <div class="sc-icon">🤖</div>
+        <h3>AI / ML</h3>
+        <div class="skill-pills">
+          <span>Machine Learning</span><span>LLMs</span><span>RAG</span>
+          <span>Prompt Engineering</span><span>Python</span>
+        </div>
+        <div class="skill-meter"><div class="sm-fill" data-w="80"></div></div>
+        <span class="sm-label">80%</span>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:.2s">
+        <div class="sc-icon">🗄️</div>
+        <h3>Backend / Systems</h3>
+        <div class="skill-pills">
+          <span>PHP</span><span>MySQL</span><span>C++</span>
+          <span>Data Structures</span><span>REST APIs</span>
+        </div>
+        <div class="skill-meter"><div class="sm-fill" data-w="72"></div></div>
+        <span class="sm-label">72%</span>
+      </div>
+      <div class="skill-card reveal" style="transition-delay:.3s">
+        <div class="sc-icon">☁️</div>
+        <h3>Cloud & Tools</h3>
+        <div class="skill-pills">
+          <span>AWS</span><span>Git</span><span>GitHub</span>
+          <span>VS Code</span><span>Blender</span><span>Scrum</span>
+        </div>
+        <div class="skill-meter"><div class="sm-fill" data-w="75"></div></div>
+        <span class="sm-label">75%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJECTS ===== -->
+<section class="projects section" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="proj-filters">
+      <button class="pf-btn active" data-filter="all">All</button>
+      <button class="pf-btn" data-filter="frontend">Frontend</button>
+      <button class="pf-btn" data-filter="ai">AI/Game</button>
+      <button class="pf-btn" data-filter="fullstack">Full Stack</button>
+      <button class="pf-btn" data-filter="3d">3D</button>
+    </div>
+
+    <div class="proj-grid" id="projGrid">
+
+      <!-- 3D Ferrari -->
+      <div class="proj-card reveal featured" data-cat="3d">
+        <div class="pc-media">
+          <div class="pc-media-inner">
+            <img src="assets/images/3d/render1.jpg" alt="Ferrari 3D Render" class="pc-img pc-img-active" id="ferrari-img-0"/>
+            <img src="assets/images/3d/render2.jpg" alt="Ferrari 3D" class="pc-img" id="ferrari-img-1"/>
+            <img src="assets/images/3d/render3.jpg" alt="Ferrari 3D" class="pc-img" id="ferrari-img-2"/>
+            <img src="assets/images/3d/render4.jpg" alt="Ferrari 3D" class="pc-img" id="ferrari-img-3"/>
+          </div>
+          <div class="pc-media-controls">
+            <button class="pmc-btn" onclick="cycleFerrary(-1)">‹</button>
+            <div class="pmc-dots" id="ferrariDots">
+              <span class="pmc-dot active" onclick="setFerrari(0)"></span>
+              <span class="pmc-dot" onclick="setFerrari(1)"></span>
+              <span class="pmc-dot" onclick="setFerrari(2)"></span>
+              <span class="pmc-dot" onclick="setFerrari(3)"></span>
+            </div>
+            <button class="pmc-btn" onclick="cycleFerrary(1)">›</button>
+          </div>
+          <div class="pc-video-btn" onclick="openVideoModal()">
+            <i class="fas fa-play"></i>
+            <span>Watch Render</span>
+          </div>
+          <div class="pc-badge">Featured</div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">3D Design</span><span class="pct-tag">Blender</span><span class="pct-tag">Rendering</span></div>
+          <h3>Ferrari 488 GTB — 3D Model</h3>
+          <p>A cinematic 3D model of the Ferrari 488 GTB built from scratch using real blueprints in Blender. Includes custom PBR textures, night-scene lighting, and a full render video.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>Blender</span><span>PBR Texturing</span><span>3D Rendering</span></div>
+            <button class="pc-live-btn" onclick="openVideoModal()"><i class="fas fa-play"></i> Watch</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator -->
+      <div class="proj-card reveal" data-cat="frontend">
+        <div class="pc-media">
+          <iframe src="projects/calculator/index.html" class="pc-iframe" title="Calculator" scrolling="no" loading="lazy"></iframe>
+          <div class="pc-iframe-overlay">
+            <button class="pco-btn" onclick="openProject('projects/calculator/index.html','Elysian Calculator')">
+              <i class="fas fa-expand"></i> Full Screen
+            </button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">Frontend</span><span class="pct-tag">JavaScript</span></div>
+          <h3>Elysian 3-in-1 Calculator</h3>
+          <p>Scientific + Programmer + Basic calculator with theme switcher, history panel, and full keyboard support. Try it live above!</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>HTML</span><span>CSS</span><span>JS</span></div>
+            <button class="pc-live-btn" onclick="openProject('projects/calculator/index.html','Calculator')"><i class="fas fa-external-link-alt"></i> Open</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Wumpus Game -->
+      <div class="proj-card reveal" data-cat="ai" style="transition-delay:.1s">
+        <div class="pc-media">
+          <iframe src="projects/wumpus/index.html" class="pc-iframe" title="Wumpus Game" scrolling="no" loading="lazy"></iframe>
+          <div class="pc-iframe-overlay">
+            <button class="pco-btn" onclick="openProject('projects/wumpus/index.html','Wumpus World')">
+              <i class="fas fa-expand"></i> Full Screen
+            </button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">Game Dev</span><span class="pct-tag">AI Logic</span></div>
+          <h3>Wumpus World Game</h3>
+          <p>Interactive browser-based AI logic game — Hunt the Wumpus. Navigate caves, detect hazards by perceptions, and grab the gold!</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>HTML</span><span>JS</span><span>Canvas</span></div>
+            <button class="pc-live-btn" onclick="openProject('projects/wumpus/index.html','Wumpus')"><i class="fas fa-gamepad"></i> Play</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Gallery -->
+      <div class="proj-card reveal" data-cat="frontend" style="transition-delay:.15s">
+        <div class="pc-media">
+          <iframe src="projects/gallery/index.html" class="pc-iframe" title="Image Gallery" scrolling="no" loading="lazy"></iframe>
+          <div class="pc-iframe-overlay">
+            <button class="pco-btn" onclick="openProject('projects/gallery/index.html','Image Gallery')">
+              <i class="fas fa-expand"></i> Full Screen
+            </button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">Frontend</span><span class="pct-tag">CodeAlpha</span></div>
+          <h3>Lionel Messi — Image Gallery</h3>
+          <p>A dynamic, filterable image gallery with lightbox, smooth transitions, and a sleek dark UI. Built for CodeAlpha internship.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>HTML</span><span>CSS</span><span>JS</span></div>
+            <button class="pc-live-btn" onclick="openProject('projects/gallery/index.html','Gallery')"><i class="fas fa-external-link-alt"></i> View</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coffee Shop -->
+      <div class="proj-card reveal" data-cat="frontend" style="transition-delay:.2s">
+        <div class="pc-media">
+          <iframe src="projects/coffee/index.html" class="pc-iframe" title="Coffee Project" scrolling="no" loading="lazy"></iframe>
+          <div class="pc-iframe-overlay">
+            <button class="pco-btn" onclick="openProject('projects/coffee/index.html','Coffee Studio')">
+              <i class="fas fa-expand"></i> Full Screen
+            </button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">3D Web</span><span class="pct-tag">Three.js</span></div>
+          <h3>Sana's Coffee — 3D Cup Studio</h3>
+          <p>A premium coffee brand website featuring a real-time 3D cup customizer built with Three.js. Rotate, color, and personalize your cup live.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>Three.js</span><span>HTML</span><span>CSS</span></div>
+            <button class="pc-live-btn" onclick="openProject('projects/coffee/index.html','Coffee')"><i class="fas fa-external-link-alt"></i> Explore</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Restaurant Website -->
+      <div class="proj-card reveal" data-cat="frontend" style="transition-delay:.25s">
+        <div class="pc-media">
+          <iframe src="projects/web/index.html" class="pc-iframe" title="Restaurant Website" scrolling="no" loading="lazy"></iframe>
+          <div class="pc-iframe-overlay">
+            <button class="pco-btn" onclick="openProject('projects/web/index.html','Restaurant Website')">
+              <i class="fas fa-expand"></i> Full Screen
+            </button>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">Web Dev</span><span class="pct-tag">Multi-page</span></div>
+          <h3>Sana's Delight — Restaurant Site</h3>
+          <p>Complete multi-page restaurant website with branded identity, audio welcome, video menu, and online registration.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>HTML</span><span>CSS</span><span>Media</span></div>
+            <button class="pc-live-btn" onclick="openProject('projects/web/index.html','Restaurant')"><i class="fas fa-external-link-alt"></i> Visit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Database / Expense Tracker -->
+      <div class="proj-card reveal" data-cat="fullstack" style="transition-delay:.3s">
+        <div class="pc-media pc-media-screenshot">
+          <div class="db-preview">
+            <div class="dbp-header">
+              <div class="dbp-dots"><span></span><span></span><span></span></div>
+              <span>Daily Expense Tracker — PHP/MySQL App</span>
+            </div>
+            <div class="dbp-content">
+              <div class="dbp-sidebar">
+                <div class="dbp-nav-item active">📊 Dashboard</div>
+                <div class="dbp-nav-item">➕ Add Expense</div>
+                <div class="dbp-nav-item">📋 Manage</div>
+                <div class="dbp-nav-item">📈 Reports</div>
+                <div class="dbp-nav-item">👤 Profile</div>
+              </div>
+              <div class="dbp-main">
+                <div class="dbp-stat-row">
+                  <div class="dbp-stat"><span class="dbp-num">PKR 45,200</span><span>Total Expenses</span></div>
+                  <div class="dbp-stat"><span class="dbp-num">23</span><span>Transactions</span></div>
+                  <div class="dbp-stat"><span class="dbp-num">6</span><span>Categories</span></div>
+                </div>
+                <div class="dbp-bar-chart">
+                  <div class="dbc-bar" style="height:60%"><span>Jan</span></div>
+                  <div class="dbc-bar" style="height:80%"><span>Feb</span></div>
+                  <div class="dbc-bar" style="height:45%"><span>Mar</span></div>
+                  <div class="dbc-bar" style="height:90%"><span>Apr</span></div>
+                  <div class="dbc-bar" style="height:70%"><span>May</span></div>
+                  <div class="dbc-bar" style="height:55%"><span>Jun</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">Full Stack</span><span class="pct-tag">PHP</span><span class="pct-tag">MySQL</span></div>
+          <h3>Daily Expense Tracker</h3>
+          <p>Full-stack PHP/MySQL web app with user authentication, expense CRUD, date/month/year reports, and a Bootstrap dashboard.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>PHP</span><span>MySQL</span><span>Bootstrap</span></div>
+            <button class="pc-live-btn" onclick="showDbInfo()"><i class="fas fa-info-circle"></i> Details</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- DSA Social Media -->
+      <div class="proj-card reveal" data-cat="ai" style="transition-delay:.35s">
+        <div class="pc-media pc-media-code">
+          <div class="code-preview">
+            <div class="cp-header">
+              <div class="cp-dots"><span></span><span></span><span></span></div>
+              <span class="cp-lang">social_media_app.cpp</span>
+            </div>
+            <pre class="cp-code"><code><span class="ck">#include</span> <span class="cs">&lt;iostream&gt;</span>
+<span class="ck">#include</span> <span class="cs">&lt;stack&gt;</span>
+<span class="ck">#include</span> <span class="cs">&lt;queue&gt;</span>
+
+<span class="ck">class</span> <span class="cn">UserNode</span> {
+<span class="ck">public:</span>
+  <span class="ct">int</span> userID;
+  string username;
+  stack&lt;Post&gt; posts;
+  queue&lt;string&gt; followers;
+  UserNode *left, *right;
+};
+
+<span class="ck">class</span> <span class="cn">SocialMediaApp</span> {
+<span class="ck">private:</span>
+  UserNode* root;
+  <span class="ct">int</span> userCounter;
+  UserNode* insertUser(UserNode* n,
+    <span class="ct">int</span> id, string name);
+  UserNode* findByName(UserNode* n,
+    string username);
+<span class="ck">public:</span>
+  <span class="cf">void</span> addUser(string name);
+  <span class="cf">void</span> addPost(string user,
+    string content);
+  <span class="cf">void</span> followUser(string from,
+    string to);
+};</code></pre>
+          </div>
+        </div>
+        <div class="pc-body">
+          <div class="pc-tags"><span class="pct-tag">C++</span><span class="pct-tag">DSA</span><span class="pct-tag">BST</span></div>
+          <h3>Social Media App — DSA Project</h3>
+          <p>C++ implementation of a social media system using Binary Search Tree for users, Stack for posts, and Queue for followers with file persistence.</p>
+          <div class="pc-footer">
+            <div class="pc-tech"><span>C++</span><span>BST</span><span>Stack</span><span>Queue</span></div>
+            <a href="projects/dsa/social_media_app.cpp" download class="pc-live-btn"><i class="fas fa-download"></i> Download</a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /proj-grid -->
+  </div>
+</section>
+
+<!-- ===== CERTIFICATIONS ===== -->
+<section class="certs section" id="certifications">
+  <div class="container">
+    <div class="section-header">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Certifications</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-glow"></div>
+        <div class="cert-icon-box">
+          <i class="fab fa-aws"></i>
+        </div>
+        <div class="cert-body">
+          <span class="cert-org">Amazon Web Services</span>
+          <h3>AWS Academy Graduate</h3>
+          <p>Cloud fundamentals, architecture, security, EC2, S3, IAM and core AWS services. Completed AWS Academy official curriculum.</p>
+          <div class="cert-footer">
+            <span class="cert-verify">✓ Verified</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cert-card reveal" style="transition-delay:.15s">
+        <div class="cert-glow"></div>
+        <div class="cert-icon-box scrum">
+          <i class="fas fa-award"></i>
+        </div>
+        <div class="cert-body">
+          <span class="cert-org">SCRUMstudy</span>
+          <h3>Certified Associate in Scrum Fundamentals (CSAF)</h3>
+          <p>Scrum methodology, sprint planning, backlog management, agile workflows, and iterative development. Official SCRUMstudy certification.</p>
+          <div class="cert-footer">
+            <span class="cert-verify">✓ Verified</span>
+            <a href="assets/images/certs/csaf_cert.pdf" target="_blank" class="cert-view-btn">View Certificate <i class="fas fa-external-link-alt"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="sec-num">05</span>
+      <h2 class="sec-title">Let's Connect</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <h3>Ready to build something amazing?</h3>
+        <p>Whether you're looking for a frontend developer, an AI engineering partner, or want to discuss the latest LLM architectures — I'm always open to great conversations and opportunities.</p>
+
+        <div class="contact-links-list">
+          <a href="mailto:sanashahzad2873@gmail.com" class="cll-item">
+            <div class="cll-icon"><i class="fas fa-envelope"></i></div>
+            <div class="cll-text">
+              <span class="cll-label">Email</span>
+              <span class="cll-val">sanashahzad2873@gmail.com</span>
+            </div>
+            <i class="fas fa-arrow-right cll-arrow"></i>
+          </a>
+          <a href="tel:+923123207029" class="cll-item">
+            <div class="cll-icon"><i class="fas fa-phone"></i></div>
+            <div class="cll-text">
+              <span class="cll-label">Phone</span>
+              <span class="cll-val">+92 312 3207029</span>
+            </div>
+            <i class="fas fa-arrow-right cll-arrow"></i>
+          </a>
+          <a href="https://github.com/SanaShahzad2873" target="_blank" class="cll-item">
+            <div class="cll-icon"><i class="fab fa-github"></i></div>
+            <div class="cll-text">
+              <span class="cll-label">GitHub</span>
+              <span class="cll-val">github.com/SanaShahzad2873</span>
+            </div>
+            <i class="fas fa-arrow-right cll-arrow"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/sana-shahzad-3ab543154/" target="_blank" class="cll-item">
+            <div class="cll-icon"><i class="fab fa-linkedin"></i></div>
+            <div class="cll-text">
+              <span class="cll-label">LinkedIn</span>
+              <span class="cll-val">linkedin.com/in/sana-shahzad</span>
+            </div>
+            <i class="fas fa-arrow-right cll-arrow"></i>
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap reveal" style="transition-delay:.15s">
+        <form id="contactForm" class="contact-form">
+          <div class="cf-group">
+            <label>Your Name</label>
+            <input type="text" id="cf-name" placeholder="e.g. Ahmed Khan" required/>
+          </div>
+          <div class="cf-group">
+            <label>Email Address</label>
+            <input type="email" id="cf-email" placeholder="your@email.com" required/>
+          </div>
+          <div class="cf-group">
+            <label>Subject</label>
+            <input type="text" id="cf-subject" placeholder="What's this about?"/>
+          </div>
+          <div class="cf-group">
+            <label>Message</label>
+            <textarea id="cf-message" rows="5" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="cf-submit">
+            <span id="cfBtnText">Send Message</span>
+            <i class="fas fa-paper-plane" id="cfBtnIcon"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="fb-logo">[<span>SS</span>]</div>
+        <p>CS Student | Frontend Dev | AI Engineer</p>
+        <p class="fb-uni">University of Central Punjab — 7th Semester</p>
+      </div>
+      <div class="footer-nav">
+        <h4>Quick Links</h4>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-contact">
+        <h4>Contact</h4>
+        <a href="mailto:sanashahzad2873@gmail.com">sanashahzad2873@gmail.com</a>
+        <a href="tel:+923123207029">+92 312 3207029</a>
+        <a href="https://github.com/SanaShahzad2873" target="_blank">GitHub</a>
+        <a href="https://www.linkedin.com/in/sana-shahzad-3ab543154/" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Sana Shahzad. All rights reserved.</span>
+      <a href="#hero" class="back-top">↑ Back to Top</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== MODALS ===== -->
+
+<!-- Video Modal -->
+<div class="modal" id="videoModal">
+  <div class="modal-backdrop" onclick="closeVideoModal()"></div>
+  <div class="modal-content video-modal-content">
+    <button class="modal-close" onclick="closeVideoModal()"><i class="fas fa-times"></i></button>
+    <h3>Ferrari 488 GTB — 3D Render Video</h3>
+    <video id="ferrariVideo" controls playsinline>
+      <source src="assets/video/ferrari_render.mp4" type="video/mp4"/>
+      Your browser does not support the video element.
+    </video>
+    <div class="vm-gallery">
+      <img src="assets/images/3d/render1.jpg" onclick="showImg(this)" alt="Render 1"/>
+      <img src="assets/images/3d/render2.jpg" onclick="showImg(this)" alt="Render 2"/>
+      <img src="assets/images/3d/render3.jpg" onclick="showImg(this)" alt="Render 3"/>
+      <img src="assets/images/3d/render4.jpg" onclick="showImg(this)" alt="Render 4"/>
+      <img src="assets/images/3d/blueprint.jpg" onclick="showImg(this)" alt="Blueprint"/>
+      <img src="assets/images/3d/frame1.png" onclick="showImg(this)" alt="Frame 1"/>
+    </div>
+  </div>
+</div>
+
+<!-- Project Fullscreen Modal -->
+<div class="modal" id="projectModal">
+  <div class="modal-backdrop" onclick="closeProjectModal()"></div>
+  <div class="modal-content project-modal-content">
+    <div class="pm-header">
+      <h3 id="projectModalTitle">Project</h3>
+      <button class="modal-close" onclick="closeProjectModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <iframe id="projectModalIframe" src="" title="Project" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- DB Info Modal -->
+<div class="modal" id="dbModal">
+  <div class="modal-backdrop" onclick="document.getElementById('dbModal').classList.remove('open')"></div>
+  <div class="modal-content db-modal-content">
+    <button class="modal-close" onclick="document.getElementById('dbModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+    <h3>Daily Expense Tracker</h3>
+    <div class="db-info-grid">
+      <div class="di-item"><i class="fas fa-server"></i><div><strong>Stack</strong><span>PHP + MySQL + Bootstrap</span></div></div>
+      <div class="di-item"><i class="fas fa-database"></i><div><strong>Database</strong><span>detsdb (MySQL)</span></div></div>
+      <div class="di-item"><i class="fas fa-user"></i><div><strong>Test Login</strong><span>testuser@gmail.com / Test@123</span></div></div>
+      <div class="di-item"><i class="fas fa-cogs"></i><div><strong>Setup</strong><span>XAMPP/WAMP — localhost/dets</span></div></div>
+    </div>
+    <div class="db-features">
+      <h4>Features</h4>
+      <ul>
+        <li>✓ User Registration & Authentication</li>
+        <li>✓ Add / Manage / Delete Expenses</li>
+        <li>✓ Date, Month, Year-wise Reports</li>
+        <li>✓ Visual Charts (Flot.js)</li>
+        <li>✓ Password Change & Recovery</li>
+        <li>✓ User Profile Management</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Image Lightbox -->
+<div class="modal" id="imgModal">
+  <div class="modal-backdrop" onclick="document.getElementById('imgModal').classList.remove('open')"></div>
+  <div class="modal-content img-modal-content">
+    <button class="modal-close" onclick="document.getElementById('imgModal').classList.remove('open')"><i class="fas fa-times"></i></button>
+    <img id="lightboxImg" src="" alt=""/>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
